@@ -84,9 +84,9 @@
                     <p class="mt-4">আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা <br> আপনার দক্ষতা
                         বাড়াতে চান, আমাদের Interactive Lessons
                         আপনাকে নিয়ে <br> যাবে অন্য একটি Level এ</p>
-                    <div class="mt-8 flex flex-col max-w-sm mx-auto md:mx-0">
-                        <input type="text" placeholder="Enter your name" class="input outline-none w-full" /> <br>
-                        <input type="password" placeholder="********" class="input outline-none w-full" /><br>
+                    <div class="mt-8 flex flex-col max-w-sm mx-auto md:mx-0 gap-y-2">
+                        <input type="text" placeholder="Enter your name" class="input outline-none w-full" /> 
+                        <input type="password" placeholder="********" class="input outline-none w-full" />
                         <button class="btn btn-primary mt-2 w-full md:w-auto">Get Started</button>
                     </div>
                 </div>
@@ -97,9 +97,13 @@
         </section>
 
         <section class="container mx-auto my-5 px-4">
-
+            <h2 class="text-4xl text-center mt-10"><span class="text-sky-400">Let's</span> learn vocabulary</h2>
+            <div id="lesson-container" class="flex flex-wrap gap-2 mt-3 justify-center"></div>
         </section>
     </main>
+
+
+    <script src="script.js"></script>
 </body>
 
 </html>
