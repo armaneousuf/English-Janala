@@ -20,6 +20,15 @@ const speakWord = (text) => {
   window.speechSynthesis.speak(utterance);
 };
 
+const infoModal = (word) => {
+  const modal = document.querySelector("#my_vocabulary_modal");
+  const title = document.querySelector("#modal-title");
+
+  title.innerText = word;
+
+  modal.showModal();
+ }
+
 const displayWords = (words) => {
   const wordsContainer = document.querySelector("#words-container");
   wordsContainer.innerHTML = "";
@@ -40,12 +49,12 @@ const displayWords = (words) => {
   words.forEach((word) => {
     const divE = document.createElement("div");
     divE.innerHTML = ` <div class="bg-white p-10 text-center rounded">
-                    <h2 class="text-2xl font-bold">${word.word ? word.word : 'শব্দ পাওয়া যায়নি'}</h2>
+                    <h2 class="text-2xl font-bold">${word.word ? word.word : "শব্দ পাওয়া যায়নি"}</h2>
                     <p class="text-gray-400 my-5 font-siliguri">${word.pronunciation}</p>
-                    <p class="text-xl font-bold text-indigo-600 font-siliguri">${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'}</p>
+                    <p class="text-xl font-bold text-indigo-600 font-siliguri">${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"}</p>
 
                     <div class="icons flex justify-between items-center mt-5">
-                        <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        <button onclick="infoModal('${word.word}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="size-6 hover:text-indigo-400 cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
