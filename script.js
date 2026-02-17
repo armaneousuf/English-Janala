@@ -10,24 +10,27 @@ const loadLevelWord = (id) => {
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((response) => response.json())
-    .then((data) => displayWords(data.data))
+    .then((data) => {
+      const clickedBTN = document.querySelector(`#lesson-btn-${id}`);
+      removeActive();
+      clickedBTN.classList.add('active');
+      displayWords(data.data);
+    })
     .catch((error) => console.log("ERROR", error));
 };
+
+const removeActive = () => {
+  const lessonBTNs = document.querySelectorAll('.lesson-btn');
+  lessonBTNs.forEach(btn => {
+    btn.classList.remove('active');
+  })
+}
 
 const speakWord = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-GB"; // Set to English
   window.speechSynthesis.speak(utterance);
 };
-
-const infoModal = (word) => {
-  const modal = document.querySelector("#my_vocabulary_modal");
-  const title = document.querySelector("#modal-title");
-
-  title.innerText = word;
-
-  modal.showModal();
- }
 
 const displayWords = (words) => {
   const wordsContainer = document.querySelector("#words-container");
@@ -54,7 +57,7 @@ const displayWords = (words) => {
                     <p class="text-xl font-bold text-indigo-600 font-siliguri">${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"}</p>
 
                     <div class="icons flex justify-between items-center mt-5">
-                        <button onclick="infoModal('${word.word}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        <button onclick="my_modal_5.showModal()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="size-6 hover:text-indigo-400 cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -80,7 +83,7 @@ const displayLessons = (lessons) => {
   for (let lesson of lessons) {
     // Create the element
     const lessonDiv = document.createElement("div");
-    lessonDiv.innerHTML = `<button onClick="loadLevelWord('${lesson.level_no}')" class="btn btn-outline btn-sm btn-primary">
+    lessonDiv.innerHTML = `<button onClick="loadLevelWord('${lesson.level_no}')" id="lesson-btn-${lesson.level_no}" class="btn btn-outline btn-sm btn-primary lesson-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round"
