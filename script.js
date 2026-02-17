@@ -19,6 +19,37 @@ const loadLevelWord = (id) => {
     .catch((error) => console.log("ERROR", error));
 };
 
+const loadWordDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const response = await fetch(url);
+  const details = await response.json();
+  displayWordDetails(details.data);
+}
+
+const displayWordDetails = (word) => {
+  const detailsContainer = document.querySelector('#details-container');
+  detailsContainer.innerHTML = `
+  
+  <h2><strong class="text-xl">${word.word}</strong> (<svg class="inline-block w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <title xmlns="">mic-24-regular</title>
+                            <path fill="currentColor"
+                                d="M18.25 11a.75.75 0 0 1 .743.648l.007.102v.5a6.75 6.75 0 0 1-6.249 6.732l-.001 2.268a.75.75 0 0 1-1.493.102l-.007-.102v-2.268a6.75 6.75 0 0 1-6.246-6.496L5 12.25v-.5a.75.75 0 0 1 1.493-.102l.007.102v.5a5.25 5.25 0 0 0 5.034 5.246l.216.004h.5a5.25 5.25 0 0 0 5.246-5.034l.004-.216v-.5a.75.75 0 0 1 .75-.75M12 2a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4m0 1.5A2.5 2.5 0 0 0 9.5 6v6a2.5 2.5 0 0 0 5 0V6A2.5 2.5 0 0 0 12 3.5" />
+                        </svg>:${word.pronunciation})</h2>
+                        <p><strong>Meaning</strong></p>
+                        <p>${word.meaning}</p>
+                        <p><strong>Example</strong></p>
+                        <p>${word.sentence}</p>
+                        <p><strong>সমার্থক শব্দ গুলো</strong></p>
+                        <p>
+                        ${word.synonyms[0] ? `<span class="bg-[#edf7ff] p-1 rounded"> ${word.synonyms[0]}</span>` : 'N/A'}
+                        ${word.synonyms[1] ? `<span class="bg-[#edf7ff] p-1 rounded"> ${word.synonyms[1]}</span>` : 'N/A'}
+                        ${word.synonyms[2] ? `<span class="bg-[#edf7ff] p-1 rounded"> ${word.synonyms[2]}</span>` : 'N/A'}
+                        </p>
+
+  `;
+  document.querySelector('#word_modal').showModal();
+}
+
 const removeActive = () => {
   const lessonBTNs = document.querySelectorAll(".lesson-btn");
   lessonBTNs.forEach((btn) => {
@@ -30,25 +61,6 @@ const speakWord = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-GB"; // Set to English
   window.speechSynthesis.speak(utterance);
-};
-
-const openModal = (word, meaning, pronunciation, sentence, pos, synonyms) => {
-  const modalWord = document.querySelector("#modal-word");
-  const modalMeaning = document.querySelector("#modal-meaning");
-  const modalPronunciation = document.querySelector("#modal-pronunciation");
-  const modalSentence = document.querySelector("#modal-sentence");
-  const modalPOS = document.querySelector("#modal-pos");
-  const modalSynonyms = document.querySelector("#modal-synonyms");
-
-  modalWord.innerText = word;
-  modalMeaning.innerText = meaning;
-  modalPronunciation.innerText = pronunciation;
-  modalSentence.innerText = sentence;
-  modalPOS.innerText = pos;
-  modalSynonyms.innerText = synonyms;
-
-  const modalE = document.getElementById("my_modal");
-  modalE.showModal();
 };
 
 const displayWords = (words) => {
@@ -76,7 +88,7 @@ const displayWords = (words) => {
                     <p class="text-xl font-bold text-indigo-600 font-siliguri">${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"}</p>
 
                     <div class="icons flex justify-between items-center mt-5">
-                        <button onclick="openModal('${word.word}', '${word.meaning}', '${word.pronunciation}', '${word.sentence}', '${word.partsOfSpeech}', '${word.synonyms}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        <button onclick="loadWordDetails('${word.id}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="size-6 hover:text-indigo-400 cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
