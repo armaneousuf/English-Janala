@@ -13,18 +13,18 @@ const loadLevelWord = (id) => {
     .then((data) => {
       const clickedBTN = document.querySelector(`#lesson-btn-${id}`);
       removeActive();
-      clickedBTN.classList.add('active');
+      clickedBTN.classList.add("active");
       displayWords(data.data);
     })
     .catch((error) => console.log("ERROR", error));
 };
 
 const removeActive = () => {
-  const lessonBTNs = document.querySelectorAll('.lesson-btn');
-  lessonBTNs.forEach(btn => {
-    btn.classList.remove('active');
-  })
-}
+  const lessonBTNs = document.querySelectorAll(".lesson-btn");
+  lessonBTNs.forEach((btn) => {
+    btn.classList.remove("active");
+  });
+};
 
 const speakWord = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
@@ -33,13 +33,12 @@ const speakWord = (text) => {
 };
 
 const openModal = (word, meaning, pronunciation, sentence, pos, synonyms) => {
-  const modalWord = document.querySelector('#modal-word');
-  const modalMeaning = document.querySelector('#modal-meaning');
-  const modalPronunciation = document.querySelector('#modal-pronunciation');
-  const modalSentence = document.querySelector('#modal-sentence');
-  const modalPOS = document.querySelector('#modal-pos');
-  const modalSynonyms = document.querySelector('#modal-synonyms');
-
+  const modalWord = document.querySelector("#modal-word");
+  const modalMeaning = document.querySelector("#modal-meaning");
+  const modalPronunciation = document.querySelector("#modal-pronunciation");
+  const modalSentence = document.querySelector("#modal-sentence");
+  const modalPOS = document.querySelector("#modal-pos");
+  const modalSynonyms = document.querySelector("#modal-synonyms");
 
   modalWord.innerText = word;
   modalMeaning.innerText = meaning;
@@ -48,10 +47,9 @@ const openModal = (word, meaning, pronunciation, sentence, pos, synonyms) => {
   modalPOS.innerText = pos;
   modalSynonyms.innerText = synonyms;
 
-  const modalE = document.getElementById('my_modal');
+  const modalE = document.getElementById("my_modal");
   modalE.showModal();
-
-}
+};
 
 const displayWords = (words) => {
   const wordsContainer = document.querySelector("#words-container");
