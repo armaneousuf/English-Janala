@@ -32,6 +32,27 @@ const speakWord = (text) => {
   window.speechSynthesis.speak(utterance);
 };
 
+const openModal = (word, meaning, pronunciation, sentence, pos, synonyms) => {
+  const modalWord = document.querySelector('#modal-word');
+  const modalMeaning = document.querySelector('#modal-meaning');
+  const modalPronunciation = document.querySelector('#modal-pronunciation');
+  const modalSentence = document.querySelector('#modal-sentence');
+  const modalPOS = document.querySelector('#modal-pos');
+  const modalSynonyms = document.querySelector('#modal-synonyms');
+
+
+  modalWord.innerText = word;
+  modalMeaning.innerText = meaning;
+  modalPronunciation.innerText = pronunciation;
+  modalSentence.innerText = sentence;
+  modalPOS.innerText = pos;
+  modalSynonyms.innerText = synonyms;
+
+  const modalE = document.getElementById('my_modal');
+  modalE.showModal();
+
+}
+
 const displayWords = (words) => {
   const wordsContainer = document.querySelector("#words-container");
   wordsContainer.innerHTML = "";
@@ -57,7 +78,7 @@ const displayWords = (words) => {
                     <p class="text-xl font-bold text-indigo-600 font-siliguri">${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"}</p>
 
                     <div class="icons flex justify-between items-center mt-5">
-                        <button onclick="my_modal_5.showModal()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        <button onclick="openModal('${word.word}', '${word.meaning}', '${word.pronunciation}', '${word.sentence}', '${word.partsOfSpeech}', '${word.synonyms}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="size-6 hover:text-indigo-400 cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
